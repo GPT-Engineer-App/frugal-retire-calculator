@@ -34,6 +34,9 @@ const Index = () => {
   const savings = income - expenses;
   const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
 
+  const totalSavingsAtRetirement = savings * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
+  const monthlySpending = (totalSavingsAtRetirement * (withdrawalRate / 100)) / 12;
+
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
       <Heading as="h1" size="2xl" mb={4} textAlign="center">
@@ -75,7 +78,7 @@ const Index = () => {
         </HStack>
       </Box>
 
-      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} withdrawalRate={withdrawalRate} investmentReturn={investmentReturn} />
+      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} withdrawalRate={withdrawalRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} />
     </Box>
   );
 };
