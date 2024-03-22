@@ -29,8 +29,9 @@ const Index = () => {
     onChange: (val) => setInvestmentReturn(val),
   });
 
-  const savings = income * (savingsRate / 100);
-  const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100) / (savingsRate / 100);
+  const expenses = income * (1 - savingsRate / 100);
+  const savings = income - expenses;
+  const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md">
@@ -54,7 +55,9 @@ const Index = () => {
           </SliderTrack>
           <SliderThumb />
         </Slider>
-        <Text>You are saving ${savings.toLocaleString()} per year</Text>
+        <Text>
+          With expenses of ${expenses.toLocaleString()} per year, you are saving ${savings.toLocaleString()} per year.
+        </Text>
       </Box>
 
       <Box mb={8} p={4} border="1px" borderColor="gray.200" rounded="md">
