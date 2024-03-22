@@ -34,7 +34,7 @@ const Index = () => {
   const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
 
   return (
-    <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md">
+    <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
       <Heading as="h1" size="2xl" mb={4} textAlign="center">
         When will I retire?💰
       </Heading>
@@ -75,8 +75,12 @@ const Index = () => {
       </Box>
 
       <Box>
-        <Heading as="h2" size="xl" mb={4}>
-          You can retire in {Math.floor(yearsToRetire)} years 🥳
+        <Heading as="h2" size="xl" mb={4} textAlign="center">
+          You can retire in{" "}
+          <Text as="span" color="#32CD32">
+            {Math.floor(yearsToRetire)}
+          </Text>{" "}
+          years 🥳
         </Heading>
         <Text fontSize="lg">
           With a {savingsRate}% savings rate, {withdrawalRate}% withdrawal rate, and {investmentReturn}% investment return, you will be able to retire in about {Math.floor(yearsToRetire)} years.
