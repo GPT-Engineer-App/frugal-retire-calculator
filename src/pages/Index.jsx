@@ -34,10 +34,9 @@ const Index = () => {
   const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
 
   return (
-    <>
-      <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
+    <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
       <Heading as="h1" size="2xl" mb={4} textAlign="center">
-        When will I retire?🤔
+        When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
         See how long until you can retire based on your income, expenses and savings rate. Adjust the settings for your specific situation.
@@ -75,34 +74,19 @@ const Index = () => {
         </HStack>
       </Box>
 
-      </Box>
-      
-      <Box mt={8} p={8} bg="#3B3B3B" color="white" borderRadius="md" boxShadow="md">
+      <Box>
         <Heading as="h2" size="xl" mb={4} textAlign="center">
-          You'll retire in{" "}
+          You can retire in{" "}
           <Text as="span" color="#32CD32">
             {Math.floor(yearsToRetire)}
           </Text>{" "}
-          years!🥳
+          years 🥳
         </Heading>
         <Text fontSize="lg">
           With a {savingsRate}% savings rate, {withdrawalRate}% withdrawal rate, and {investmentReturn}% investment return, you will be able to retire in about {Math.floor(yearsToRetire)} years.
         </Text>
+      </Box>
     </Box>
-      
-      <Box mt={8} p={8} bg="#3B3B3B" color="white" borderRadius="md" boxShadow="md">
-        <Heading as="h2" size="xl" mb={4} textAlign="center">
-          You'll retire in{" "}
-          <Text as="span" color="#32CD32">
-            {Math.floor(yearsToRetire)}
-          </Text>{" "}
-          years!🥳
-        </Heading>
-        <Text fontSize="lg">
-          With a {savingsRate}% savings rate, {withdrawalRate}% withdrawal rate, and {investmentReturn}% investment return, you will be able to retire in about {Math.floor(yearsToRetire)} years.
-        </Text>
-      </Box>
-    </>
   );
 };
 
