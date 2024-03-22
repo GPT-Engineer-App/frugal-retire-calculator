@@ -36,7 +36,7 @@ const Index = () => {
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
       <Heading as="h1" size="2xl" mb={4} textAlign="center">
-        When will I retire?🤔
+        When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
         See how long until you can retire based on your income, expenses and savings rate. Adjust the settings for your specific situation.
@@ -74,7 +74,7 @@ const Index = () => {
         </HStack>
       </Box>
 
-      <Box mt={8} p={8} bg="#3B3B3B" color="white" borderRadius="md" boxShadow="md">
+      <Box>
         <Heading as="h2" size="xl" mb={4} textAlign="center">
           You can retire in{" "}
           <Text as="span" color="#32CD32">
