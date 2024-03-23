@@ -29,10 +29,10 @@ const Index = () => {
 
   const maxSavingsRate = Math.min(savingsRate, (1 - monthlyExpenses / monthlyIncome) * 100);
   const monthlySavings = monthlyIncome * (maxSavingsRate / 100);
-  const yearsToRetire = Math.log(monthlyExpenses / (monthlySavings * (investmentReturn / 100 / 12))) / Math.log(1 + investmentReturn / 100 / 12);
+  const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
 
-  const totalSavingsAtRetirement = monthlySavings * 12 * yearsToRetire;
-  const monthlySpending = monthlyExpenses;
+  const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
+  const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
