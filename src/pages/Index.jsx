@@ -6,7 +6,7 @@ const Index = () => {
   const [monthlyIncome, setMonthlyIncome] = useState(5000);
   const [monthlyExpenses, setMonthlyExpenses] = useState(1500);
 
-  const [savingsRate, setSavingsRate] = useState(50);
+  const [savingsRate, setSavingsRate] = useState(Math.round(((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100));
 
   const [investmentReturn, setInvestmentReturn] = useState(9);
 
@@ -27,7 +27,7 @@ const Index = () => {
     document.head.appendChild(link);
   }, []);
 
-  const maxSavingsRate = Math.min(savingsRate, (1 - monthlyExpenses / monthlyIncome) * 100);
+  const maxSavingsRate = Math.round((1 - monthlyExpenses / monthlyIncome) * 100);
   const monthlySavings = monthlyIncome * (maxSavingsRate / 100);
   const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
 
@@ -52,13 +52,21 @@ const Index = () => {
       </Box>
 
       <Box mb={4}>
-        <Text mb={2}>Monthly Expenses</Text>
-        <Input type="number" value={monthlyExpenses} onChange={(e) => setMonthlyExpenses(e.target.value)} />
+        <Text mb={2}>Monthly Expenses: ${monthlyExpenses.toLocaleString()}</Text>
       </Box>
 
       <Box mb={8}>
         <Text mb={2}>Savings Rate: {savingsRate}%</Text>
-        <Slider value={savingsRate} min={0} max={100} step={1} onChange={(val) => setSavingsRate(val)}>
+        <Slider
+          value={savingsRate}
+          min={0}
+          max={maxSavingsRate}
+          step={1}
+          onChange={(val) => {
+            setSavingsRate(val);
+            setMonthlyExpenses(monthlyIncome * (1 - val / 100));
+          }}
+        >
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
