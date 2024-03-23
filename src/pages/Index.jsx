@@ -5,10 +5,23 @@ import ResultsCard from "../components/ResultsCard";
 const Index = () => {
   const [monthlyIncome, setMonthlyIncome] = useState(5000);
   const [monthlyExpenses, setMonthlyExpenses] = useState(1500);
-
   const [savingsRate, setSavingsRate] = useState(Math.round(((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100));
-
   const [investmentReturn, setInvestmentReturn] = useState(9);
+
+  useEffect(() => {
+    setSavingsRate(Math.round(((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100));
+  }, [monthlyIncome, monthlyExpenses]);
+
+  useEffect(() => {
+    setMonthlyExpenses(monthlyIncome * (1 - savingsRate / 100));
+  }, [monthlyIncome, savingsRate]);
+
+  useEffect(() => {
+    const monthlySavings = monthlyIncome * (savingsRate / 100);
+    const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
+    const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
+    const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
+  }, [monthlyIncome, monthlyExpenses, savingsRate, investmentReturn]);
 
   const { getInputProps: getReturnInputProps } = useNumberInput({
     step: 0.1,
@@ -47,7 +60,15 @@ const Index = () => {
 
       <Box mb={4}>
         <Text mb={2}>Monthly Income</Text>
-        <Input type="number" value={monthlyIncome} onChange={(e) => setMonthlyIncome(e.target.value)} />
+        <Input
+          type="number"
+          value={monthlyIncome}
+          onChange={(e) => {
+            const newMonthlyIncome = e.target.value;
+            setMonthlyIncome(newMonthlyIncome);
+            setSavingsRate(Math.round(((newMonthlyIncome - monthlyExpenses) / newMonthlyIncome) * 100));
+          }}
+        />
       </Box>
 
       <Box mb={4}>
@@ -79,7 +100,15 @@ const Index = () => {
       <Box mb={8}>
         <Text mb={2}>Investment Return: {investmentReturn}%</Text>
         <HStack>
-          <Slider value={investmentReturn} min={0} max={100} step={1} onChange={(val) => setInvestmentReturn(val)}>
+          <Slider
+            value={investmentReturn}
+            min={0}
+            max={100}
+            step={1}
+            onChange={(val) => {
+              setInvestmentReturn(val);
+            }}
+          >
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>
@@ -89,7 +118,7 @@ const Index = () => {
         </HStack>
       </Box>
 
-      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} />
+      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} monthlySavings={monthlySavings} totalSavingsAtRetirement={totalSavingsAtRetirement} />
     </Box>
   );
 };
