@@ -14,17 +14,25 @@ const ResultsCard = ({ yearsToRetire, savingsRate, investmentReturn, monthlySpen
       <Text fontSize="lg" mb={2}>
         Savings Rate: {savingsRate}%
       </Text>
-      <Text fontSize="lg" mb={2}>  
+      <Text fontSize="lg" mb={2}>
         Investment Return: {investmentReturn}%
       </Text>
       <Text fontSize="lg" mb={2}>
         Monthly Savings: ${monthlySavings.toLocaleString()}
       </Text>
-      <Text fontSize="lg" mb={2}>
-        Total Savings at Retirement: ${totalSavingsAtRetirement.toLocaleString()}
+      <Text fontSize="lg" mb={2} fontWeight="bold" color="green.500">
+        Woah, your total savings at retirement will be{" "}
+        <Text as="span" fontWeight="bold" color="green.500">
+          ${totalSavingsAtRetirement.toLocaleString()}
+        </Text>
+        !
       </Text>
-      <Text fontSize="lg">
-        Monthly Spending in Retirement: ${monthlySpending.toLocaleString()}
+      <Text fontSize="lg" fontWeight="bold" color="green.500">
+        Get ready to spend a whopping{" "}
+        <Text as="span" fontWeight="bold" color="green.500">
+          ${monthlySpending.toLocaleString()}
+        </Text>{" "}
+        each month for the rest of your life.
       </Text>
     </Box>
   );
