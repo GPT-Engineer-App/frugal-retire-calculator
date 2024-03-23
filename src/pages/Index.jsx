@@ -131,7 +131,7 @@ const Index = () => {
       </Box>
 
       <Button colorScheme="green" size="lg" onClick={calculateRetirement} mt={8} mx="auto" display="block">
-        Submit
+        Calculate
       </Button>
 
       {isSubmitted && <ResultsCard yearsToRetire={retirementData.yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={retirementData.monthlySpending} monthlySavings={retirementData.monthlySavings} totalSavingsAtRetirement={retirementData.totalSavingsAtRetirement} />}
