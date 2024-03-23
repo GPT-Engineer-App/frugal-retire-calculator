@@ -7,22 +7,11 @@ const Index = () => {
 
   const [savingsRate, setSavingsRate] = useState(50);
 
-  const [withdrawalRate, setWithdrawalRate] = useState(4);
-  const [investmentReturn, setInvestmentReturn] = useState(7);
-
-  const { getInputProps: getWithdrawalInputProps } = useNumberInput({
-    step: 0.1,
-    defaultValue: 4,
-    min: 2,
-    max: 6,
-    precision: 1,
-    value: withdrawalRate,
-    onChange: (val) => setWithdrawalRate(val),
-  });
+  const [investmentReturn, setInvestmentReturn] = useState(9);
 
   const { getInputProps: getReturnInputProps } = useNumberInput({
     step: 0.1,
-    defaultValue: 7,
+    defaultValue: 9,
     min: 2,
     max: 12,
     precision: 1,
@@ -39,10 +28,10 @@ const Index = () => {
 
   const expenses = income * (1 - savingsRate / 100);
   const savings = income - expenses;
-  const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
+  const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
 
   const totalSavingsAtRetirement = savings * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
-  const monthlySpending = (totalSavingsAtRetirement * (withdrawalRate / 100)) / 12;
+  const monthlySpending = (totalSavingsAtRetirement / yearsToRetire) / 12;
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
@@ -50,8 +39,10 @@ const Index = () => {
         When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
-        See how long until you can retire based on your income, expenses and savings rate. 
-        <Text fontFamily="'Gloria Hallelujah', cursive" mt={4}>Change the settings as you like!</Text>
+        See how long until you can retire based on your income, expenses and savings rate.
+        <Text fontFamily="'Gloria Hallelujah', cursive" mt={4}>
+          Change the settings as you like!
+        </Text>
       </Text>
 
       <Box mb={4}>
@@ -72,21 +63,20 @@ const Index = () => {
         </Text>
       </Box>
 
-      <Box mb={8} p={4} border="1px" borderColor="gray.200" rounded="md">
-        <Text fontSize="lg" mb={4}>
-          Advanced Settings
-        </Text>
-        <HStack mb={4}>
-          <Text>Withdrawal Rate (%):</Text>
-          <Input {...getWithdrawalInputProps()} width="100px" />
-        </HStack>
+      <Box mb={8}>
+        <Text mb={2}>Investment Return: {investmentReturn}%</Text>
         <HStack>
-          <Text>Investment Return (%):</Text>
+          <Slider value={investmentReturn} min={2} max={12} step={0.1} onChange={(val) => setInvestmentReturn(val)}>
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
           <Input {...getReturnInputProps()} width="100px" />
         </HStack>
       </Box>
 
-      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} withdrawalRate={withdrawalRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} />
+      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} />
     </Box>
   );
 };
