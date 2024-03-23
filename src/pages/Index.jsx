@@ -3,7 +3,8 @@ import { Box, Heading, Text, Input, Slider, SliderTrack, SliderFilledTrack, Slid
 import ResultsCard from "../components/ResultsCard";
 
 const Index = () => {
-  const [income, setIncome] = useState(50000);
+  const [monthlyIncome, setMonthlyIncome] = useState(5000);
+  const [monthlyExpenses, setMonthlyExpenses] = useState(1500);
 
   const [savingsRate, setSavingsRate] = useState(50);
 
@@ -26,12 +27,12 @@ const Index = () => {
     document.head.appendChild(link);
   }, []);
 
-  const expenses = income * (1 - savingsRate / 100);
-  const savings = income - expenses;
+  const maxSavingsRate = Math.min(savingsRate, (1 - monthlyExpenses / monthlyIncome) * 100);
+  const monthlySavings = monthlyIncome * (maxSavingsRate / 100);
   const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
 
-  const totalSavingsAtRetirement = savings * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
-  const monthlySpending = (totalSavingsAtRetirement / yearsToRetire) / 12;
+  const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
+  const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
@@ -46,8 +47,13 @@ const Index = () => {
       </Text>
 
       <Box mb={4}>
-        <Text mb={2}>Net Income (Annual)</Text>
-        <Input type="number" value={income} onChange={(e) => setIncome(e.target.value)} />
+        <Text mb={2}>Monthly Income</Text>
+        <Input type="number" value={monthlyIncome} onChange={(e) => setMonthlyIncome(e.target.value)} />
+      </Box>
+
+      <Box mb={4}>
+        <Text mb={2}>Monthly Expenses</Text>
+        <Input type="number" value={monthlyExpenses} onChange={(e) => setMonthlyExpenses(e.target.value)} />
       </Box>
 
       <Box mb={8}>
@@ -59,7 +65,7 @@ const Index = () => {
           <SliderThumb />
         </Slider>
         <Text>
-          With expenses of ${expenses.toLocaleString()} per year, you are saving ${savings.toLocaleString()} per year.
+          With monthly expenses of ${monthlyExpenses.toLocaleString()}, you are saving ${monthlySavings.toLocaleString()} per month.
         </Text>
       </Box>
 
