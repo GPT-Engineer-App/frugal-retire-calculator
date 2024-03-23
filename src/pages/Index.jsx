@@ -40,11 +40,22 @@ const Index = () => {
     document.head.appendChild(link);
   }, []);
 
-  const monthlySavings = monthlyIncome * (savingsRate / 100);
-  const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
+  const [monthlySavings, setMonthlySavings] = useState(0);
+  const [yearsToRetire, setYearsToRetire] = useState(0);
+  const [totalSavingsAtRetirement, setTotalSavingsAtRetirement] = useState(0);
+  const [monthlySpending, setMonthlySpending] = useState(0);
 
-  const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
-  const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
+  useEffect(() => {
+    const newMonthlySavings = monthlyIncome * (savingsRate / 100);
+    const newYearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
+    const newTotalSavingsAtRetirement = newMonthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, newYearsToRetire) - 1) / (investmentReturn / 100));
+    const newMonthlySpending = newTotalSavingsAtRetirement / newYearsToRetire / 12;
+
+    setMonthlySavings(newMonthlySavings);
+    setYearsToRetire(newYearsToRetire);
+    setTotalSavingsAtRetirement(newTotalSavingsAtRetirement);
+    setMonthlySpending(newMonthlySpending);
+  }, [monthlyIncome, monthlyExpenses, savingsRate, investmentReturn]);
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
