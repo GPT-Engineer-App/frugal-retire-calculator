@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Heading, Text, Input, Button, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useNumberInput, HStack } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Box, Heading, Text, Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useNumberInput, HStack } from "@chakra-ui/react";
 import ResultsCard from "../components/ResultsCard";
 
 const Index = () => {
@@ -30,6 +30,13 @@ const Index = () => {
     onChange: (val) => setInvestmentReturn(val),
   });
 
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.href = "https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+  }, []);
+
   const expenses = income * (1 - savingsRate / 100);
   const savings = income - expenses;
   const yearsToRetire = Math.log(1 + withdrawalRate / (savingsRate / 100)) / Math.log(1 + investmentReturn / 100);
@@ -43,7 +50,8 @@ const Index = () => {
         When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
-        See how long until you can retire based on your income, expenses and savings rate. Adjust the settings for your specific situation.
+        See how long until you can retire based on your income, expenses and savings rate. 
+        <Text fontFamily="'Gloria Hallelujah', cursive" mt={4}>Change the settings as you like!</Text>
       </Text>
 
       <Box mb={4}>
