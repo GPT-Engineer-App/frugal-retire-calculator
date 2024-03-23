@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Heading, Text, Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useNumberInput, HStack } from "@chakra-ui/react";
+import { Box, Heading, Text, Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, useNumberInput, HStack, Button } from "@chakra-ui/react";
 import ResultsCard from "../components/ResultsCard";
 
 const Index = () => {
@@ -40,22 +40,23 @@ const Index = () => {
     document.head.appendChild(link);
   }, []);
 
-  const [monthlySavings, setMonthlySavings] = useState(0);
-  const [yearsToRetire, setYearsToRetire] = useState(0);
-  const [totalSavingsAtRetirement, setTotalSavingsAtRetirement] = useState(0);
-  const [monthlySpending, setMonthlySpending] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [retirementData, setRetirementData] = useState(null);
 
-  useEffect(() => {
-    const newMonthlySavings = monthlyIncome * (savingsRate / 100);
-    const newYearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
-    const newTotalSavingsAtRetirement = newMonthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, newYearsToRetire) - 1) / (investmentReturn / 100));
-    const newMonthlySpending = newTotalSavingsAtRetirement / newYearsToRetire / 12;
+  const calculateRetirement = () => {
+    const monthlySavings = monthlyIncome * (savingsRate / 100);
+    const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
+    const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
+    const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
 
-    setMonthlySavings(newMonthlySavings);
-    setYearsToRetire(newYearsToRetire);
-    setTotalSavingsAtRetirement(newTotalSavingsAtRetirement);
-    setMonthlySpending(newMonthlySpending);
-  }, [monthlyIncome, monthlyExpenses, savingsRate, investmentReturn]);
+    setRetirementData({
+      monthlySavings,
+      yearsToRetire,
+      totalSavingsAtRetirement,
+      monthlySpending,
+    });
+    setIsSubmitted(true);
+  };
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
@@ -104,7 +105,7 @@ const Index = () => {
           <SliderThumb />
         </Slider>
         <Text>
-          With monthly expenses of ${monthlyExpenses.toLocaleString()}, you are saving ${monthlySavings.toLocaleString()} per month.
+          With monthly expenses of ${monthlyExpenses.toLocaleString()}, you are saving ${(monthlyIncome * (savingsRate / 100)).toLocaleString()} per month.
         </Text>
       </Box>
 
@@ -129,7 +130,11 @@ const Index = () => {
         </HStack>
       </Box>
 
-      <ResultsCard yearsToRetire={yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={monthlySpending} monthlySavings={monthlySavings} totalSavingsAtRetirement={totalSavingsAtRetirement} />
+      <Button colorScheme="green" size="lg" onClick={calculateRetirement} mt={8} mx="auto" display="block">
+        Submit
+      </Button>
+
+      {isSubmitted && <ResultsCard yearsToRetire={retirementData.yearsToRetire} savingsRate={savingsRate} investmentReturn={investmentReturn} monthlySpending={retirementData.monthlySpending} monthlySavings={retirementData.monthlySavings} totalSavingsAtRetirement={retirementData.totalSavingsAtRetirement} />}
     </Box>
   );
 };
