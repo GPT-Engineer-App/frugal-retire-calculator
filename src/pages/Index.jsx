@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
       <Heading as="h1" size="2xl" mb={4} textAlign="center">
-        When will You retire?💰
+        When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
         See how long until you can retire based on your income, expenses and savings rate.
