@@ -27,8 +27,7 @@ const Index = () => {
     document.head.appendChild(link);
   }, []);
 
-  const maxSavingsRate = Math.round((1 - monthlyExpenses / monthlyIncome) * 100);
-  const monthlySavings = monthlyIncome * (maxSavingsRate / 100);
+  const monthlySavings = monthlyIncome * (savingsRate / 100);
   const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
 
   const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
@@ -60,7 +59,7 @@ const Index = () => {
         <Slider
           value={savingsRate}
           min={0}
-          max={maxSavingsRate}
+          max={100}
           step={1}
           onChange={(val) => {
             setSavingsRate(val);
@@ -80,7 +79,7 @@ const Index = () => {
       <Box mb={8}>
         <Text mb={2}>Investment Return: {investmentReturn}%</Text>
         <HStack>
-          <Slider value={investmentReturn} min={2} max={12} step={0.1} onChange={(val) => setInvestmentReturn(val)}>
+          <Slider value={investmentReturn} min={0} max={100} step={1} onChange={(val) => setInvestmentReturn(val)}>
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>
