@@ -22,7 +22,7 @@ const ResultsCard = ({ yearsToRetire, savingsRate, investmentReturn, monthlySpen
         Get ready to spend a whopping{" "}
         <Text as="span" fontWeight="bold">
           ${monthlySpending.toLocaleString()}
-        </Text>.
+        </Text> each month.
       </Text>
     </Box>
   );
