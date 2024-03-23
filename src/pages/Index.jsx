@@ -38,9 +38,22 @@ const Index = () => {
 
   const calculateRetirement = () => {
     const monthlySavings = monthlyIncome * (savingsRate / 100);
-    const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
-    const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
-    const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
+    const annualSavings = monthlySavings * 12;
+    const initialSavings = 0;
+    const safeWithdrawalRate = 0.04;
+    const annualInvestmentReturn = investmentReturn / 100;
+    let totalSavings = initialSavings;
+    let yearsToRetire = 0;
+
+    while (totalSavings < (monthlyExpenses * 12) / safeWithdrawalRate) {
+      totalSavings = (totalSavings + annualSavings) * (1 + annualInvestmentReturn);
+      yearsToRetire++;
+    }
+
+    // The incorrect calculation block is removed.
+
+    const monthlySpending = (totalSavings * safeWithdrawalRate) / 12;
+    const totalSavingsAtRetirement = totalSavings;
 
     setRetirementData({
       monthlySavings,
