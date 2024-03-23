@@ -16,13 +16,6 @@ const Index = () => {
     setMonthlyExpenses(monthlyIncome * (1 - savingsRate / 100));
   }, [monthlyIncome, savingsRate]);
 
-  useEffect(() => {
-    const monthlySavings = monthlyIncome * (savingsRate / 100);
-    const yearsToRetire = Math.log(25) / Math.log(1 + investmentReturn / 100);
-    const totalSavingsAtRetirement = monthlySavings * 12 * ((Math.pow(1 + investmentReturn / 100, yearsToRetire) - 1) / (investmentReturn / 100));
-    const monthlySpending = totalSavingsAtRetirement / yearsToRetire / 12;
-  }, [monthlyIncome, monthlyExpenses, savingsRate, investmentReturn]);
-
   const { getInputProps: getReturnInputProps } = useNumberInput({
     step: 0.1,
     defaultValue: 9,
@@ -35,7 +28,7 @@ const Index = () => {
 
   useEffect(() => {
     const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap";
+    link.href = "https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap&family=Inter:wght@100..900";
     link.rel = "stylesheet";
     document.head.appendChild(link);
   }, []);
@@ -60,11 +53,11 @@ const Index = () => {
 
   return (
     <Box p={8} maxWidth="600px" mx="auto" bg="white" borderRadius="md" boxShadow="md" mt={8}>
-      <Heading as="h1" size="2xl" mb={4} textAlign="center">
+      <Heading as="h1" size="2xl" mb={4} textAlign="center" fontFamily="Inter" fontWeight="black">
         When will I retire?💰
       </Heading>
       <Text fontSize="xl" mb={8}>
-        See how long until you can retire based on your income, expenses and savings rate.
+        See how long until you can retire based on your income, expenses and savings rate.🌴
         <Text fontFamily="'Gloria Hallelujah', cursive" mt={4}>
           Change the settings as you like!
         </Text>
