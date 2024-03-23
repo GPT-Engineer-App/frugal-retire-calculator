@@ -130,7 +130,7 @@ const Index = () => {
         </HStack>
       </Box>
 
-      <Button colorScheme="green" size="lg" onClick={calculateRetirement} mt={8} mx="auto" display="block" backgroundColor="#32CD32">
+      <Button colorScheme="green" size="lg" onClick={calculateRetirement} mt={8} mx="auto" display="block">
         Submit
       </Button>
 
